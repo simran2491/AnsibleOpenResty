@@ -1,0 +1,15 @@
+Install ansible on your system using native package manager.
+For RedHat family system use the following command to install ansible.
+yum install ansible
+
+For Debian family system use the following commang to install ansible.
+apt-get install ansible.
+
+Edit the file /etc/ansible/hosts.
+
+Uncomment [webservers] group and add the host/hosts in which you want to install OpenResty below the group name in which you want to install OpenResty.
+
+Ensure that you have root access to the host machine in which OpemResty needs to be installed. SSH into host machine once so that its key get added into known_host file of you system.
+Now use the following command to install OpenResty using ansible playbook
+
+ansible-playbook openresty.yml -k

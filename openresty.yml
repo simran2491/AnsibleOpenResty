@@ -1,0 +1,40 @@
+---
+- hosts: webservers
+  tasks:
+   - name: Install yum packages
+     yum: name={{item}} state=installed
+     with_items:
+         - readline-devel
+         - pcre-devel
+         - openssl-devel
+         - gcc
+         - wget
+     when: ansible_os_family == 'RedHat'
+
+
+   - name: Install apt Packages
+     apt: name={{item}} state=installed
+     with_items:
+         - libreadline-dev
+         - libncurses5-dev
+         - libpcre3-dev
+         - libssl-dev
+         - perl
+         - make
+         - build-essential
+         - wget
+     when: ansible_os_family == 'Debian'
+
+
+   - name: Download OpenResty Package
+     shell: wget https://openresty.org/download/openresty-1.9.7.4.tar.gz chdir=/tmp
+
+
+   - name: Deflating Openresty Packages
+     shell: tar -xvf openresty-1.9.7.4.tar.gz chdir=/tmp
+
+   - name: Configuring OpenResty
+     shell: ./configure --with-luajit --with-pcre --with-pcre-jit chdir=/tmp/openresty-1.9.7.4/
+
+   - name: Installing OpenResty
+     shell: make && make install chdir=/tmp/openresty-1.9.7.4/
