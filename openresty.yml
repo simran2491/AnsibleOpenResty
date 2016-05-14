@@ -1,5 +1,6 @@
 ---
 - hosts: webservers
+  remote_user: root
   tasks:
    - name: Install yum packages
      yum: name={{item}} state=installed
